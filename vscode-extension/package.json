@@ -1,0 +1,82 @@
+{
+  "name": "artifact-sync-assistant",
+  "displayName": "Artifact Sync Assistant",
+  "description": "Visualize and apply AI-assisted change impact analysis results inside VS Code.",
+  "version": "0.0.1",
+  "publisher": "your-publisher-id",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alor-e/artifact-sync"
+  },
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "artifactSync.openDashboard",
+        "title": "Artifact Sync: Open Dashboard"
+      },
+      {
+        "command": "artifactSync.setApiKey",
+        "title": "Artifact Sync: Set API Key"
+      }
+    ],
+    "configuration": {
+      "title": "Artifact Sync",
+      "properties": {
+        "artifactSync.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional absolute path to a Python 3.10+ interpreter to run the agent."
+        },
+        "artifactSync.provider": {
+          "type": "string",
+          "enum": [
+            "OPENAI",
+            "GEMINI",
+            "ANTHROPIC"
+          ],
+          "default": "OPENAI",
+          "description": "Model provider used for analysis and fixes."
+        },
+        "artifactSync.model": {
+          "type": "string",
+          "default": "gpt-5-mini",
+          "description": "Default model name supplied to the agent."
+        },
+        "artifactSync.maxDepth": {
+          "type": "number",
+          "default": 3,
+          "description": "Maximum repository depth to traverse when building the tree context."
+        },
+        "artifactSync.maxRetries": {
+          "type": "number",
+          "default": 3,
+          "description": "Maximum retry attempts for LLM calls before the agent aborts."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint . --ext .ts",
+    "package": "vsce package --allow-package-all-secrets"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/vscode": "^1.84.0",
+    "@vscode/vsce": "^3.6.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.2"
+  }
+}
