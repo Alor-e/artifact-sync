@@ -63,6 +63,8 @@
     }
   },
   "scripts": {
+    "sync-agent": "node scripts/sync-agent.mjs",
+    "prepackage": "npm run sync-agent",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",

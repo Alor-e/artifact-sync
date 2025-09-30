@@ -51,6 +51,7 @@ artifact-sync/
 │   ├── dist/ArtifactSyncAssistant.vsix # Mirror of the packaged VSIX for reference
 │   ├── media/                          # Dashboard HTML/CSS/JS assets
 │   ├── out/                            # Compiled TypeScript output
+│   ├── python/                         # Bundled backend copied during packaging
 │   └── src/                            # Extension + webview controller logic
 └── README.md                           # This document
 ```
@@ -79,6 +80,8 @@ mkdir -p dist
 cp artifact-sync-assistant-0.0.1.vsix dist/ArtifactSyncAssistant.vsix
 cp artifact-sync-assistant-0.0.1.vsix ../ArtifactSyncAssistant.vsix
 ```
+
+`npm run package` automatically syncs `change-impact-agent/` into `vscode-extension/python/` so the VSIX always bundles the backend.
 
 Update the version number in `package.json` (and the copy commands) if you publish a new release.
 

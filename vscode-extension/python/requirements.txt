@@ -1,0 +1,29 @@
+# Load environment variables from a .env file
+python-dotenv>=1.1.0 # pip install python-dotenv
+
+# Data validation and settings management
+pydantic>=2.0.0 # pip install pydantic
+
+# Google Gemini / GenAI Python SDK
+google-genai>=1.0.0 # pip install google-genai
+google-api-core>=2.25.1 # pip install google-api-core
+
+# OpenAI Python SDK
+openai>=1.93.0 # pip install openai
+
+# Anthropic Python SDK
+anthropic>=0.55.0 # pip install anthropic
+
+# Git integration
+GitPython>=3.1.44 # pip install GitPython
+
+# Parsers for structured data files (YAML, TOML)
+PyYAML>=6.0 # pip install PyYAML
+toml>=0.10.2 # pip install toml
+
+# Tree-sitter and parsers for all languages (used by your 'parser.*' modules)
+tree-sitter>=0.24.0 # Python bindings for the core tree-sitter library
+tree-sitter-language-pack>=0.8.0 # Pre-built grammar parsers for 165+ languages
+
+# Token counting for evaluation metrics
+tiktoken>=0.7.0 # pip install tiktoken
