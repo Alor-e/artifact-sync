@@ -145,9 +145,46 @@ class DashboardSession {
           await this.generateFix(String(message.payload.path));
         }
         break;
+      case 'updateProvider':
+        await this.applyProviderUpdate(message.payload?.provider);
+        break;
       default:
         break;
     }
+  }
+
+  private async applyProviderUpdate(candidate: unknown): Promise<void> {
+    if (typeof candidate !== 'string') {
+      return;
+    }
+    const normalized = candidate.toUpperCase();
+    if (!['OPENAI', 'GEMINI', 'ANTHROPIC'].includes(normalized)) {
+      return;
+    }
+    const provider = normalized as ModelProvider;
+    if (this.currentProvider === provider) {
+      return;
+    }
+
+    const config = vscode.workspace.getConfiguration('artifactSync');
+    let updated = false;
+    try {
+      await config.update('provider', provider, vscode.ConfigurationTarget.Workspace);
+      updated = true;
+    } catch {
+      // fallback to a user-level preference when workspace-level update is unavailable
+    }
+
+    if (!updated) {
+      try {
+        await config.update('provider', provider, vscode.ConfigurationTarget.Global);
+        updated = true;
+      } catch (error) {
+        void vscode.window.showErrorMessage(`Failed to persist provider setting: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+
+    this.currentProvider = provider;
   }
 
   private async runAnalysis(overrides?: Partial<Pick<AnalysisOptions, 'provider' | 'model' | 'maxDepth' | 'maxRetries'>>): Promise<void> {

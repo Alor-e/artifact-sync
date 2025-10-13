@@ -2,6 +2,8 @@
 
 Artifact Sync pairs a packaged VS Code extension with a Python analysis agent to surface change-impact insights directly inside the editor. The tool inspects recent repository changes, highlights impacted files, and (optionally) generates remediation guidance or fixes.
 
+The Python agent powering Artifact Sync is also published as a standalone project: [artifact-sync-backend](https://github.com/Alor-e/artifact-sync-backend).
+
 ---
 
 ## Quick Start for Reviewers
@@ -48,7 +50,8 @@ artifact-sync/
 │   ├── llm/                            # Provider adapters + unified chat manager
 │   └── ...
 ├── vscode-extension/                   # VS Code extension sources
-│   ├── dist/ArtifactSyncAssistant.vsix # Mirror of the packaged VSIX for reference
+│   ├── artifact-sync-assistant-0.0.1.vsix
+│                                       # Packaged extension emitted by npm run package
 │   ├── media/                          # Dashboard HTML/CSS/JS assets
 │   ├── out/                            # Compiled TypeScript output
 │   ├── python/                         # Bundled backend copied during packaging
@@ -68,6 +71,13 @@ The Python backend retains its own detailed README (`change-impact-agent/README.
 
 ---
 
+## Model Guidance
+
+- Internal experiments (and the accompanying paper demo) relied on the `gpt-5-mini` model.
+- Lighter Gemini releases—especially `gemini-flash-lite-latest`—complete significantly faster while still producing actionable insights.
+
+---
+
 ## Maintainer Notes
 
 If you need to regenerate the VSIX before sharing the repository:
@@ -76,8 +86,6 @@ If you need to regenerate the VSIX before sharing the repository:
 cd vscode-extension
 npm install --save-dev @vscode/vsce   # only once
 npm run package
-mkdir -p dist
-cp artifact-sync-assistant-0.0.1.vsix dist/ArtifactSyncAssistant.vsix
 cp artifact-sync-assistant-0.0.1.vsix ../ArtifactSyncAssistant.vsix
 ```
 
@@ -88,3 +96,4 @@ Update the version number in `package.json` (and the copy commands) if you publi
 ---
 
 For questions, issues, or contributions, please open an issue on the project GitHub page: [Alor-e/artifact-sync](https://github.com/Alor-e/artifact-sync).
+- **Model guidance** – Internal experiments (and the accompanying paper demo) used the `gpt-5-mini` model. Lighter Gemini tiers such as `gemini-flash-lite-latest` run noticeably faster for exploratory testing; feel free to pick the trade-off that matches your latency and quality targets.

@@ -64,6 +64,7 @@
 
   providerSelect?.addEventListener('change', () => {
     state.settings.provider = String(providerSelect.value || 'OPENAI').toUpperCase();
+    vscode.postMessage({ type: 'updateProvider', payload: { provider: state.settings.provider } });
     syncSettingsInputs();
   });
 
